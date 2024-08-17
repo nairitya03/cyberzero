@@ -1,9 +1,12 @@
 # Cyber Zero
 This is a Cybersecurity focused agentic Implementation of [Agent Zero AI framework](https://github.com/frdel/agent-zero). To Leverage full potential of this framework, use uncensored model with GPU.
 
+This is still work-in-progress project.
+
+
 ## Know Issuses
 - Does not work well with llama3.1 model.
-- When working with with uncensored model, sometimes get into infinte loop of AI-Human conversation.
+- When working with uncensored model, sometimes get into infinte loop of AI-Human conversation.
 
 ## NOTE:
 This is for Eductaion and Research purpose only. Use at your own risk.
