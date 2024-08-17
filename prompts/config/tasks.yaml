@@ -1,0 +1,87 @@
+soc_manager_task:
+  description: >
+      - Analyze the task given by USER carefully. TASK: {query}
+      - Decide if the task is simple and can be handled by you directly, or if it requires the expertise of sub-agents. List of available sub-agents {agents}. **YOU CAN DELEGATE WORK TO ONLY ONE SUB-AGENT.**
+      - (# NOTE: Execute this Step "ONLY" FOR COMPLEX TASKS) Apply the "RETHINK-OBSERVE-ACT" strategy.
+      - For simpler tasks that fall within your expertise, handle them directly using the "web_search_tool" if necessary.
+      - Delegate specific subtasks to either the pentester or threat intelligence analyst based on the NEED for their specialized skills.
+      - **Emphasize to sub-agents that they should communicate immediately if they believe they have the FINAL ANSWER.**
+      - **STOP THE CREW CHAIN IMMEDIATELY if an accurate final answer is found, with a confidence level that justifies stopping further execution.**
+      - Validate the final answer for completeness and accuracy before final submission. **If THE ANSWER SUFFICENTLY SOLVES THE QUERY DO NOT START ANY MORE CREW CHAIN EXECUTINOS.**
+      - Collect "THE FINAL ANSWER" from the ASSIGNED team member and present it in a clear and concise format to the USER.
+
+  expected_output: >
+      - A clear, concise, and actionable output for the USER.
+      - If Output contains block of bash/shell commands or python scripts make sure it is inside code-block
+         ## Example
+         ```
+         nmap -T4 -sV 192.168.0.1
+         ```
+
+pentester_task:
+  description: >
+      - Carefully Analyze the task assigned by the SOC Manager from a hacker/pentester perspective, identifying potential security weaknesses (IF ANY at ALL).
+      - (# NOTE: Execute this Step "ONLY" FOR COMPLEX TAKS) Apply the "RETHINK-OBSERVE-ACT" strategy to develop a comprehensive security assessment plan.
+      - (# NOTE: Execute this Step "ONLY" If specific XIOT network infrastructure, XIOT hardware or firmware details are provided) Analyze potential vulnerabilities in systems, networks, and applications.
+      - Develop exploitation strategies using a combination of manual techniques and automated tools.
+      - (# NOTE: USE TOOL ONLY IF YOU LACK INFORMATION) Use the "web_search_tool" to find documentation for specific tools, bash commands, or Python libraries. Use the "deep_search = True" argument for more detailed information (USE "deep_search" very Carefully).
+      - Create proof-of-concept demonstrations with clear, actionable steps using security tools and either bash/shell commands or Python3 scripts.
+      - Document your proof-of-concept with commands or scripts or tools developed during the assessment in a clear, professional manner.
+      - **Communicate immediately to SOC MANAGER if you believe you have the FINAL ANSWER.**
+      - **STOP THE CREW CHAIN IMMEDIATELY if an accurate final answer is found, with a confidence level that justifies stopping further execution.**
+      - Validate the final answer for completeness and accuracy before final submission. **If THE ANSWER SUFFICENTLY SOLVES THE QUERY:**
+         - **DO NOT DELEGATE TASK TO ANY OTHER AGENTS.**
+         - **DO NOT START ANY MORE CREW CHAIN EXECUTINOS.**
+      - Return "THE FINAL ANSWER" to SOC Manager. 
+
+  expected_output: >
+      Your Response should always be in the format:
+      - Step-by-step instructions for replicating Proof-of-concepts
+      - Any **Commands, Custom Scripts or Tools developed during the assessment.**
+
+threat_intel_task:
+  description: >
+      - Review the task assigned by the SOC Manager, focusing on the current threat landscape in the XIoT (Extended Internet of Things) domain.
+      - Conduct in-depth research on emerging threats, attack patterns, and threat actor groups relevant to XIoT, including:
+         - Industrial Control Systems (ICS)
+         - Operational Technology (OT)
+         - Internet of Things (IoT) devices
+         - Edge computing systems
+      - Utilize various intelligence sources:
+         - Open-source intelligence (OSINT)
+         - Dark web monitoring
+         - Threat feeds
+         - Specialized XIoT threat intelligence platforms
+         - Geopolitical factors influencing cyber threats in the XIoT space
+      - When needed, use the "web_search_tool" to find relevant information. Use the "deep_search = True" argument for more detailed information (USE "deep_search" very Carefully).
+      - Correlate gathered intelligence with specific indicators of compromise (IoCs) and tactics, techniques, and procedures (TTPs) observed in the current incident, focusing on XIoT-specific attack vectors.
+      - Map identified threats to the MITRE ATT&CK for ICS framework:
+         - Identify relevant tactics, techniques, and sub-techniques
+         - Determine the stage of the attack lifecycle for each identified threat
+      - Analyze the potential motivations and capabilities of threat actors related to the XIoT scenario, considering both cybercriminal and nation-state actors targeting critical infrastructure.
+      - Identify any similarities with known XIoT-specific threat campaigns or actor groups.
+      - Develop strategic recommendations for enhancing the overall security posture based on the threat intelligence gathered, specifically tailored to XIoT environments.
+      - Propose mitigation strategies aligned with the MITRE ATT&CK for ICS framework:
+         - Suggest specific countermeasures for each identified tactic and technique
+         - Prioritize mitigations based on their potential impact and ease of implementation
+      - Compile all findings into a comprehensive threat intelligence report, with a focus on XIoT-specific insights and recommendations.
+      - **Communicate immediately to SOC MANAGER if you believe you have the FINAL ANSWER.**
+      - **STOP THE CREW CHAIN IMMEDIATELY if an accurate final answer is found, with a confidence level that justifies stopping further execution.**
+      - Validate the final answer for completeness and accuracy before final submission. **If THE ANSWER SUFFICENTLY SOLVES THE QUERY:**
+         - **DO NOT DELEGATE TASK TO ANY OTHER AGENTS.**
+         - **DO NOT START ANY MORE CREW CHAIN EXECUTINOS.**
+      - Return "THE FINAL ANSWER" to SOC Manager. 
+
+  expected_output: >
+      A comprehensive XIoT-focused threat intelligence report containing:
+      - Analysis of potential threat actors, their motivations, and capabilities in the XIoT space
+      - Identified IoCs and TTPs specific to XIoT environments
+      - Correlation with known XIoT threat campaigns or actor groups
+      - Threat mapping to the MITRE ATT&CK for ICS framework:
+         - Tactics and techniques identified
+         - Stage of attack lifecycle for each threat
+      - Strategic recommendations for improving security posture in XIoT environments:
+         - Short-term and long-term mitigation strategies
+         - Prioritized list of countermeasures based on the ATT&CK for ICS framework
+      - Potential implications of the identified threats on critical infrastructure and industrial operations
+      - Suggested monitoring, detection, and mitigation strategies for XIoT-specific threats
