@@ -1,8 +1,7 @@
 **/.DS_Store
 **/.env
 **/__pycache__/
-
-
+.tmp.**
 
 # Ignore all contents of the virtual environment directory
 .venv/*
@@ -21,3 +20,4 @@ memory/*
 logs/*
 # But do not ignore the directory itself
 !logs/.gitkeep
+.tmp.driveupload/**

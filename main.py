@@ -9,9 +9,11 @@ from python.helpers.files import read_file
 from python.helpers import files
 import python.helpers.timed_input as timed_input
 
+input_lock = threading.Lock()
+
+## load env variables...
 load_dotenv()
 
-input_lock = threading.Lock()
 os.chdir(files.get_abs_path("./work_dir")) #change CWD to work_dir
 MODEL = os.getenv("model_name8b")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
@@ -159,8 +161,8 @@ def timeout_input(prompt, timeout=10):
 
 if __name__ == "__main__":
     print("Initializing framework...")
-    OLLAMA_HOST = "https://e3b0-34-125-97-215.ngrok-free.app" #input("enter OLLAMA_HOST_URL: >> ")
-    MODEL = "tale/godseye-neo-v0.1.gguf" #input ("enter OLLAMA_MODEL_NAME: >>")
+    # OLLAMA_HOST = "https://e3b0-34-125-97-215.ngrok-free.app" #input("enter OLLAMA_HOST_URL: >> ")
+    # MODEL = "tale/godseye-neo-v0.1.gguf" #input ("enter OLLAMA_MODEL_NAME: >>")
     # Start the key capture thread for user intervention during agent streaming
     threading.Thread(target=capture_keys, daemon=True).start()
 

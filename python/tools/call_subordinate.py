@@ -10,6 +10,7 @@ class Delegation(Tool):
         # create subordinate agent using the data object on this agent and set superior agent to his data object
         if self.agent.get_data("subordinate") is None or str(reset).lower().strip() == "true":
            
+        ## TODO: Improve sub-ordinate logic to better handle delegations.   
             if agent_name and not agent_name.startswith("Agent"):
                 subordinate = Agent(self.agent.agent_name, self.agent.config)
             else:
